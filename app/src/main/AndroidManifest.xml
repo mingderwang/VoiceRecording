@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.log4analytics.mobile.voiderecording"
     xmlns:tools="http://schemas.android.com/tools">
-    <uses-sdk android:targetSdkVersion="17" android:minSdkVersion="1"
-        tools:overrideLibrary="android.support.v7.appcompact"/>
+    <uses-sdk android:targetSdkVersion="23" android:minSdkVersion="1"
+     />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <application
