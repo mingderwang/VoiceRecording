@@ -1,6 +1,7 @@
 package com.log4analytics.mobile.voiderecording;
 
 import android.app.Activity;
+import java.util.Arrays;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
@@ -190,6 +191,18 @@ public class Send extends Activity implements OnClickListener, OnRecordPositionU
 
     private Thread streamThread;
 
+    // convert short to byte
+    private byte[] short2byte(short[] sData) {
+        int shortArrsize = sData.length;
+        byte[] bytes = new byte[shortArrsize * 2];
+        for (int i = 0; i < shortArrsize; i++) {
+            bytes[i * 2] = (byte) (sData[i] & 0x00FF);
+            bytes[(i * 2) + 1] = (byte) (sData[i] >> 8);
+            sData[i] = 0;
+        }
+        return bytes;
+
+    }
 
     public void startRecording() {
 
@@ -230,7 +243,8 @@ public class Send extends Activity implements OnClickListener, OnRecordPositionU
                         recorder.setPositionNotificationPeriod(minBufSize);
 
                             //long t1 = System.currentTimeMillis();
-                            buffer = buffers[ix++ % buffers.length];
+                        int index = ix++ % buffers.length;
+                            buffer = buffers[index];
                             read = recorder.read(buffer, 0, buffer.length);
                             //time after reading
                             //read_time = System.currentTimeMillis();
@@ -248,7 +262,9 @@ public class Send extends Activity implements OnClickListener, OnRecordPositionU
 
                         //socket.send(packet);
                         System.out.println("MinBufferSize: " + minBufSize);
-
+                        System.out.println("index: " + index);
+                        byte[] b = short2byte(buffer);
+                        System.out.println(Arrays.toString(b));
 
                     }
                 } else {
